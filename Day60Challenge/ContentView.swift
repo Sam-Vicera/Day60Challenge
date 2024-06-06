@@ -5,6 +5,7 @@
 //  Created by Samuel Hernandez Vicera on 4/9/24.
 //
 
+import SwiftData
 import SwiftUI
 
 

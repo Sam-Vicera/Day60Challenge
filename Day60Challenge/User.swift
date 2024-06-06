@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-struct User: Codable, Identifiable {
+@Model
+class User: Codable, Identifiable {
     var id: String
     var isActive: Bool
     var name: String
@@ -23,9 +25,30 @@ struct User: Codable, Identifiable {
         if isActive == true {return "🟢"}
         else { return "🔴"}
     }
+    
+    init(id: String, isActive: Bool, name: String, age: Int, company: String, email: String, address: String, about: String, registered: Date, tags: [String], friends: [Friends]) {
+        self.id = id
+        self.isActive = isActive
+        self.name = name
+        self.age = age
+        self.company = company
+        self.email = email
+        self.address = address
+        self.about = about
+        self.registered = registered
+        self.tags = tags
+        self.friends = friends
+    }
+  
 }
 
-struct Friends: Codable, Identifiable, Hashable {
+class Friends: Codable, Identifiable{
     var id: String
     var name: String
+    
+    required init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.name = try container.decode(String.self, forKey: .name)
+    }
 }
